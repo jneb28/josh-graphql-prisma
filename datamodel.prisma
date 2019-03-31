@@ -1,0 +1,12 @@
+type Player @db(name: "players") {
+  _id: ID! @id @unique
+  name: String!
+  wins: Int!
+  losses: Int!
+  race: String!
+}
+
+type PlayerList {
+  id: ID! @id
+  playerList: [Player!]! @relation(link: INLINE)
+}
