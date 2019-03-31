@@ -5,8 +5,3 @@ type Player @db(name: "players") {
   losses: Int!
   race: String!
 }
-
-type PlayerList {
-  id: ID! @id
-  playerList: [Player!]! @relation(link: INLINE)
-}

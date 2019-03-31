@@ -15,7 +15,6 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 
 export interface Exists {
   player: (where?: PlayerWhereInput) => Promise<boolean>;
-  playerList: (where?: PlayerListWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -60,29 +59,6 @@ export interface Prisma {
       last?: Int;
     }
   ) => PlayerConnectionPromise;
-  playerList: (where: PlayerListWhereUniqueInput) => PlayerListPromise;
-  playerLists: (
-    args?: {
-      where?: PlayerListWhereInput;
-      orderBy?: PlayerListOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<PlayerList>;
-  playerListsConnection: (
-    args?: {
-      where?: PlayerListWhereInput;
-      orderBy?: PlayerListOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => PlayerListConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -105,19 +81,6 @@ export interface Prisma {
   ) => PlayerPromise;
   deletePlayer: (where: PlayerWhereUniqueInput) => PlayerPromise;
   deleteManyPlayers: (where?: PlayerWhereInput) => BatchPayloadPromise;
-  createPlayerList: (data: PlayerListCreateInput) => PlayerListPromise;
-  updatePlayerList: (
-    args: { data: PlayerListUpdateInput; where: PlayerListWhereUniqueInput }
-  ) => PlayerListPromise;
-  upsertPlayerList: (
-    args: {
-      where: PlayerListWhereUniqueInput;
-      create: PlayerListCreateInput;
-      update: PlayerListUpdateInput;
-    }
-  ) => PlayerListPromise;
-  deletePlayerList: (where: PlayerListWhereUniqueInput) => PlayerListPromise;
-  deleteManyPlayerLists: (where?: PlayerListWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -130,9 +93,6 @@ export interface Subscription {
   player: (
     where?: PlayerSubscriptionWhereInput
   ) => PlayerSubscriptionPayloadSubscription;
-  playerList: (
-    where?: PlayerListSubscriptionWhereInput
-  ) => PlayerListSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -154,8 +114,6 @@ export type PlayerOrderByInput =
   | "losses_DESC"
   | "race_ASC"
   | "race_DESC";
-
-export type PlayerListOrderByInput = "id_ASC" | "id_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -225,29 +183,6 @@ export interface PlayerWhereInput {
   AND?: PlayerWhereInput[] | PlayerWhereInput;
 }
 
-export type PlayerListWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface PlayerListWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  playerList_some?: PlayerWhereInput;
-  AND?: PlayerListWhereInput[] | PlayerListWhereInput;
-}
-
 export interface PlayerCreateInput {
   name: String;
   wins: Int;
@@ -269,131 +204,6 @@ export interface PlayerUpdateManyMutationInput {
   race?: String;
 }
 
-export interface PlayerListCreateInput {
-  playerList?: PlayerCreateManyInput;
-}
-
-export interface PlayerCreateManyInput {
-  create?: PlayerCreateInput[] | PlayerCreateInput;
-  connect?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-}
-
-export interface PlayerListUpdateInput {
-  playerList?: PlayerUpdateManyInput;
-}
-
-export interface PlayerUpdateManyInput {
-  create?: PlayerCreateInput[] | PlayerCreateInput;
-  update?:
-    | PlayerUpdateWithWhereUniqueNestedInput[]
-    | PlayerUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | PlayerUpsertWithWhereUniqueNestedInput[]
-    | PlayerUpsertWithWhereUniqueNestedInput;
-  delete?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-  connect?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-  set?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-  disconnect?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-  deleteMany?: PlayerScalarWhereInput[] | PlayerScalarWhereInput;
-  updateMany?:
-    | PlayerUpdateManyWithWhereNestedInput[]
-    | PlayerUpdateManyWithWhereNestedInput;
-}
-
-export interface PlayerUpdateWithWhereUniqueNestedInput {
-  where: PlayerWhereUniqueInput;
-  data: PlayerUpdateDataInput;
-}
-
-export interface PlayerUpdateDataInput {
-  name?: String;
-  wins?: Int;
-  losses?: Int;
-  race?: String;
-}
-
-export interface PlayerUpsertWithWhereUniqueNestedInput {
-  where: PlayerWhereUniqueInput;
-  update: PlayerUpdateDataInput;
-  create: PlayerCreateInput;
-}
-
-export interface PlayerScalarWhereInput {
-  _id?: ID_Input;
-  _id_not?: ID_Input;
-  _id_in?: ID_Input[] | ID_Input;
-  _id_not_in?: ID_Input[] | ID_Input;
-  _id_lt?: ID_Input;
-  _id_lte?: ID_Input;
-  _id_gt?: ID_Input;
-  _id_gte?: ID_Input;
-  _id_contains?: ID_Input;
-  _id_not_contains?: ID_Input;
-  _id_starts_with?: ID_Input;
-  _id_not_starts_with?: ID_Input;
-  _id_ends_with?: ID_Input;
-  _id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  wins?: Int;
-  wins_not?: Int;
-  wins_in?: Int[] | Int;
-  wins_not_in?: Int[] | Int;
-  wins_lt?: Int;
-  wins_lte?: Int;
-  wins_gt?: Int;
-  wins_gte?: Int;
-  losses?: Int;
-  losses_not?: Int;
-  losses_in?: Int[] | Int;
-  losses_not_in?: Int[] | Int;
-  losses_lt?: Int;
-  losses_lte?: Int;
-  losses_gt?: Int;
-  losses_gte?: Int;
-  race?: String;
-  race_not?: String;
-  race_in?: String[] | String;
-  race_not_in?: String[] | String;
-  race_lt?: String;
-  race_lte?: String;
-  race_gt?: String;
-  race_gte?: String;
-  race_contains?: String;
-  race_not_contains?: String;
-  race_starts_with?: String;
-  race_not_starts_with?: String;
-  race_ends_with?: String;
-  race_not_ends_with?: String;
-  AND?: PlayerScalarWhereInput[] | PlayerScalarWhereInput;
-  OR?: PlayerScalarWhereInput[] | PlayerScalarWhereInput;
-  NOT?: PlayerScalarWhereInput[] | PlayerScalarWhereInput;
-}
-
-export interface PlayerUpdateManyWithWhereNestedInput {
-  where: PlayerScalarWhereInput;
-  data: PlayerUpdateManyDataInput;
-}
-
-export interface PlayerUpdateManyDataInput {
-  name?: String;
-  wins?: Int;
-  losses?: Int;
-  race?: String;
-}
-
 export interface PlayerSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -401,15 +211,6 @@ export interface PlayerSubscriptionWhereInput {
   updatedFields_contains_some?: String[] | String;
   node?: PlayerWhereInput;
   AND?: PlayerSubscriptionWhereInput[] | PlayerSubscriptionWhereInput;
-}
-
-export interface PlayerListSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PlayerListWhereInput;
-  AND?: PlayerListSubscriptionWhereInput[] | PlayerListSubscriptionWhereInput;
 }
 
 export interface NodeNode {
@@ -519,98 +320,6 @@ export interface AggregatePlayerSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PlayerList {
-  id: ID_Output;
-}
-
-export interface PlayerListPromise extends Promise<PlayerList>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  playerList: <T = FragmentableArray<Player>>(
-    args?: {
-      where?: PlayerWhereInput;
-      orderBy?: PlayerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface PlayerListSubscription
-  extends Promise<AsyncIterator<PlayerList>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  playerList: <T = Promise<AsyncIterator<PlayerSubscription>>>(
-    args?: {
-      where?: PlayerWhereInput;
-      orderBy?: PlayerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface PlayerListConnection {
-  pageInfo: PageInfo;
-  edges: PlayerListEdge[];
-}
-
-export interface PlayerListConnectionPromise
-  extends Promise<PlayerListConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PlayerListEdge>>() => T;
-  aggregate: <T = AggregatePlayerListPromise>() => T;
-}
-
-export interface PlayerListConnectionSubscription
-  extends Promise<AsyncIterator<PlayerListConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PlayerListEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePlayerListSubscription>() => T;
-}
-
-export interface PlayerListEdge {
-  node: PlayerList;
-  cursor: String;
-}
-
-export interface PlayerListEdgePromise
-  extends Promise<PlayerListEdge>,
-    Fragmentable {
-  node: <T = PlayerListPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PlayerListEdgeSubscription
-  extends Promise<AsyncIterator<PlayerListEdge>>,
-    Fragmentable {
-  node: <T = PlayerListSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregatePlayerList {
-  count: Int;
-}
-
-export interface AggregatePlayerListPromise
-  extends Promise<AggregatePlayerList>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregatePlayerListSubscription
-  extends Promise<AsyncIterator<AggregatePlayerList>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface BatchPayload {
   count: Long;
 }
@@ -680,47 +389,6 @@ export interface PlayerPreviousValuesSubscription
   race: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PlayerListSubscriptionPayload {
-  mutation: MutationType;
-  node: PlayerList;
-  updatedFields: String[];
-  previousValues: PlayerListPreviousValues;
-}
-
-export interface PlayerListSubscriptionPayloadPromise
-  extends Promise<PlayerListSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PlayerListPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PlayerListPreviousValuesPromise>() => T;
-}
-
-export interface PlayerListSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PlayerListSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PlayerListSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PlayerListPreviousValuesSubscription>() => T;
-}
-
-export interface PlayerListPreviousValues {
-  id: ID_Output;
-}
-
-export interface PlayerListPreviousValuesPromise
-  extends Promise<PlayerListPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-}
-
-export interface PlayerListPreviousValuesSubscription
-  extends Promise<AsyncIterator<PlayerListPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-}
-
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
@@ -751,10 +419,6 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "Player",
-    embedded: false
-  },
-  {
-    name: "PlayerList",
     embedded: false
   }
 ];

@@ -7,10 +7,6 @@ var models = [
   {
     name: "Player",
     embedded: false
-  },
-  {
-    name: "PlayerList",
-    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

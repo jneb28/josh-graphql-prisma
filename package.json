@@ -1,0 +1,23 @@
+{
+  "name": "josh-graphql-prisma",
+  "version": "1.0.0",
+  "description": "josh-graphql-prisma",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jneb28/josh-graphql-prisma.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jneb28/josh-graphql-prisma/issues"
+  },
+  "homepage": "https://github.com/jneb28/josh-graphql-prisma#readme",
+  "dependencies": {
+    "prisma-client-lib": "^1.29.2"
+  }
+}
