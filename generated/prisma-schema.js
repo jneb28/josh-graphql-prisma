@@ -7,6 +7,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateRealm {
+  count: Int!
+}
+
 type BatchPayload {
   count: Long!
 }
@@ -20,6 +24,12 @@ type Mutation {
   upsertPlayer(where: PlayerWhereUniqueInput!, create: PlayerCreateInput!, update: PlayerUpdateInput!): Player!
   deletePlayer(where: PlayerWhereUniqueInput!): Player
   deleteManyPlayers(where: PlayerWhereInput): BatchPayload!
+  createRealm(data: RealmCreateInput!): Realm!
+  updateRealm(data: RealmUpdateInput!, where: RealmWhereUniqueInput!): Realm
+  updateManyRealms(data: RealmUpdateManyMutationInput!, where: RealmWhereInput): BatchPayload!
+  upsertRealm(where: RealmWhereUniqueInput!, create: RealmCreateInput!, update: RealmUpdateInput!): Realm!
+  deleteRealm(where: RealmWhereUniqueInput!): Realm
+  deleteManyRealms(where: RealmWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -45,6 +55,7 @@ type Player {
   wins: Int!
   losses: Int!
   race: String!
+  realm: String!
 }
 
 type PlayerConnection {
@@ -58,6 +69,7 @@ input PlayerCreateInput {
   wins: Int!
   losses: Int!
   race: String!
+  realm: String
 }
 
 type PlayerEdge {
@@ -76,6 +88,8 @@ enum PlayerOrderByInput {
   losses_DESC
   race_ASC
   race_DESC
+  realm_ASC
+  realm_DESC
 }
 
 type PlayerPreviousValues {
@@ -84,6 +98,7 @@ type PlayerPreviousValues {
   wins: Int!
   losses: Int!
   race: String!
+  realm: String!
 }
 
 type PlayerSubscriptionPayload {
@@ -107,6 +122,7 @@ input PlayerUpdateInput {
   wins: Int
   losses: Int
   race: String
+  realm: String
 }
 
 input PlayerUpdateManyMutationInput {
@@ -114,6 +130,7 @@ input PlayerUpdateManyMutationInput {
   wins: Int
   losses: Int
   race: String
+  realm: String
 }
 
 input PlayerWhereInput {
@@ -175,6 +192,20 @@ input PlayerWhereInput {
   race_not_starts_with: String
   race_ends_with: String
   race_not_ends_with: String
+  realm: String
+  realm_not: String
+  realm_in: [String!]
+  realm_not_in: [String!]
+  realm_lt: String
+  realm_lte: String
+  realm_gt: String
+  realm_gte: String
+  realm_contains: String
+  realm_not_contains: String
+  realm_starts_with: String
+  realm_not_starts_with: String
+  realm_ends_with: String
+  realm_not_ends_with: String
   AND: [PlayerWhereInput!]
 }
 
@@ -186,11 +217,107 @@ type Query {
   player(where: PlayerWhereUniqueInput!): Player
   players(where: PlayerWhereInput, orderBy: PlayerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Player]!
   playersConnection(where: PlayerWhereInput, orderBy: PlayerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayerConnection!
+  realm(where: RealmWhereUniqueInput!): Realm
+  realms(where: RealmWhereInput, orderBy: RealmOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Realm]!
+  realmsConnection(where: RealmWhereInput, orderBy: RealmOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RealmConnection!
   node(id: ID!): Node
+}
+
+type Realm {
+  _id: ID!
+  name: String!
+}
+
+type RealmConnection {
+  pageInfo: PageInfo!
+  edges: [RealmEdge]!
+  aggregate: AggregateRealm!
+}
+
+input RealmCreateInput {
+  name: String!
+}
+
+type RealmEdge {
+  node: Realm!
+  cursor: String!
+}
+
+enum RealmOrderByInput {
+  _id_ASC
+  _id_DESC
+  name_ASC
+  name_DESC
+}
+
+type RealmPreviousValues {
+  _id: ID!
+  name: String!
+}
+
+type RealmSubscriptionPayload {
+  mutation: MutationType!
+  node: Realm
+  updatedFields: [String!]
+  previousValues: RealmPreviousValues
+}
+
+input RealmSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RealmWhereInput
+  AND: [RealmSubscriptionWhereInput!]
+}
+
+input RealmUpdateInput {
+  name: String
+}
+
+input RealmUpdateManyMutationInput {
+  name: String
+}
+
+input RealmWhereInput {
+  _id: ID
+  _id_not: ID
+  _id_in: [ID!]
+  _id_not_in: [ID!]
+  _id_lt: ID
+  _id_lte: ID
+  _id_gt: ID
+  _id_gte: ID
+  _id_contains: ID
+  _id_not_contains: ID
+  _id_starts_with: ID
+  _id_not_starts_with: ID
+  _id_ends_with: ID
+  _id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [RealmWhereInput!]
+}
+
+input RealmWhereUniqueInput {
+  _id: ID
 }
 
 type Subscription {
   player(where: PlayerSubscriptionWhereInput): PlayerSubscriptionPayload
+  realm(where: RealmSubscriptionWhereInput): RealmSubscriptionPayload
 }
 `
       }

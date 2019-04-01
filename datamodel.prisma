@@ -1,7 +1,14 @@
-type Player @db(name: "players") {
+type Player @db(name: "players"){ 
   _id: ID! @id @unique
   name: String!
   wins: Int!
   losses: Int!
   race: String!
+  realm: Realm!
+}
+
+type Realm @db(name: "realms"){
+  _id: ID! @id @unique
+  name: String!
+  population: [Player] @relation(link: INLINE)
 }
