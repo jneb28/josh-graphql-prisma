@@ -1,8 +1,14 @@
 
 # josh-graphql-prisma
-a node server using graphql and prisma
+A node server using graphql and prisma
 
 ## Project Setup
+Clone the repo
+
+```
+cd josh-graphql-prisma
+```
+
 ```
 npm install
 ```
@@ -11,13 +17,16 @@ npm install
 npm install -g prisma
 ```
 
-## Software Installation
+Install and run [Docker](https://www.docker.com/)
 
-Install [Docker](https://www.docker.com/)
-
-## Launch Prisma
+## Launch Prisma (localhost:4466)
 ```
 npm run launchPrisma
+```
+
+## Launch GraphQL API (localhost:4000)
+```
+npm start
 ```
 
 ## Project Checklist

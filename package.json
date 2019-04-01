@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node-dev --no-notify --respawn --transpileOnly ./",
     "launchPrisma": "docker-compose up -d"
   },
   "repository": {
@@ -19,6 +20,14 @@
   },
   "homepage": "https://github.com/jneb28/josh-graphql-prisma#readme",
   "dependencies": {
+    "graphql": "^14.2.1",
+    "graphql-yoga": "^1.17.4",
+    "nexus": "^0.11.6",
+    "nexus-prisma": "^0.3.5",
     "prisma-client-lib": "^1.29.2"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^1.0.0-pre.32",
+    "typescript": "^3.4.1"
   }
 }
