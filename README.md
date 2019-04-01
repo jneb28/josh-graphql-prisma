@@ -4,14 +4,18 @@ a node server using graphql and prisma
 
 ## Project setup
 ```
-Install prisma npm install -g prisma
-Install [Docker](https://www.docker.com/)
-Run npm install
+npm install
 ```
 
-### Compiles and hot-reloads for development
 ```
-npm start
+npm install -g prisma
+```
+
+Install [Docker](https://www.docker.com/)
+
+### Launch Prisma
+```
+npm run launchPrisma
 ```
 
 ## Project Checklist
