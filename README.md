@@ -51,9 +51,14 @@ query {
 ##### Example Query 2:
 ```
 query {
-  players {
-    _id
+  player(where: {
+    _id: ""
+  })
+  {
     name
+    wins
+    losses
+    race
     realm {
       name
     }
