@@ -158,7 +158,7 @@ See the [docs](http://localhost:4466/) tab for available delete mutations.
 ```
 mutation {
   deletePlayer(where: {
-    _id: "5ca0530be03dd80007cc4777"
+    _id: ""
   })
   {
     name
