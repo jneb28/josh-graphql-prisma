@@ -21,7 +21,7 @@ Install and run [Docker](https://www.docker.com/)
 
 ## Launch Prisma (localhost:4466)
 ```
-npm run launchPrisma
+npm run startDocker
 ```
 
 ## Launch GraphQL API (localhost:4000)
