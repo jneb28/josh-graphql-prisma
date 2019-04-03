@@ -35,7 +35,7 @@ See [datamodel.prisma](https://github.com/jneb28/josh-graphql-prisma/blob/master
 #### 2. Docker-based PostgreSQL, MySQL, or MongoDB as your data store.
 See [docker-compose.yml](https://github.com/jneb28/josh-graphql-prisma/blob/master/docker-compose.yml)
 #### 3. At least 3 Query resolvers to get data from your server.
-See the graphql api [docs](http://localhost:4000/) tab for available queries.
+See the [graphql api](http://localhost:4000/) docs tab for available queries.
 ##### Example Query 1:
 ```
 query {
@@ -80,7 +80,7 @@ query {
 }
 ```
 #### 4. At least 2 Mutation resolvers allowing users to create, update, or upsert an item.
-See the graphql api [docs](http://localhost:4000/) tab for available mutations.
+See the [graphql api](http://localhost:4000/) docs tab for available mutations.
 ##### Example Upsert Mutation 1:
 ```
 mutation {
@@ -158,7 +158,7 @@ mutation {
 }
 ```
 #### 5. At least 1 Mutation resolver allowing users to delete an item.
-See the graphql api [docs](http://localhost:4000/) tab for available delete mutations.
+See the [graphql api](http://localhost:4000/) docs tab for available delete mutations.
 ##### Example Delete Mutation:
 ```
 mutation {
@@ -171,7 +171,7 @@ mutation {
 }
 ```
 #### 6. Your datastore will contain at least 25 items
-See the prisma [docs](http://localhost:4466/) tab for available datastore queries.
+See the [prisma](http://localhost:4466/) docs tab for available datastore queries.
 ##### Example Aggregate Query:
 ```
 query {
