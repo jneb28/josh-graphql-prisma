@@ -15,7 +15,6 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 
 export interface Exists {
   player: (where?: PlayerWhereInput) => Promise<boolean>;
-  realm: (where?: RealmWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -60,29 +59,6 @@ export interface Prisma {
       last?: Int;
     }
   ) => PlayerConnectionPromise;
-  realm: (where: RealmWhereUniqueInput) => RealmPromise;
-  realms: (
-    args?: {
-      where?: RealmWhereInput;
-      orderBy?: RealmOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<Realm>;
-  realmsConnection: (
-    args?: {
-      where?: RealmWhereInput;
-      orderBy?: RealmOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => RealmConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -105,22 +81,6 @@ export interface Prisma {
   ) => PlayerPromise;
   deletePlayer: (where: PlayerWhereUniqueInput) => PlayerPromise;
   deleteManyPlayers: (where?: PlayerWhereInput) => BatchPayloadPromise;
-  createRealm: (data: RealmCreateInput) => RealmPromise;
-  updateRealm: (
-    args: { data: RealmUpdateInput; where: RealmWhereUniqueInput }
-  ) => RealmPromise;
-  updateManyRealms: (
-    args: { data: RealmUpdateManyMutationInput; where?: RealmWhereInput }
-  ) => BatchPayloadPromise;
-  upsertRealm: (
-    args: {
-      where: RealmWhereUniqueInput;
-      create: RealmCreateInput;
-      update: RealmUpdateInput;
-    }
-  ) => RealmPromise;
-  deleteRealm: (where: RealmWhereUniqueInput) => RealmPromise;
-  deleteManyRealms: (where?: RealmWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -133,9 +93,6 @@ export interface Subscription {
   player: (
     where?: PlayerSubscriptionWhereInput
   ) => PlayerSubscriptionPayloadSubscription;
-  realm: (
-    where?: RealmSubscriptionWhereInput
-  ) => RealmSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -156,13 +113,9 @@ export type PlayerOrderByInput =
   | "losses_ASC"
   | "losses_DESC"
   | "race_ASC"
-  | "race_DESC";
-
-export type RealmOrderByInput =
-  | "_id_ASC"
-  | "_id_DESC"
-  | "name_ASC"
-  | "name_DESC";
+  | "race_DESC"
+  | "realm_ASC"
+  | "realm_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -229,62 +182,29 @@ export interface PlayerWhereInput {
   race_not_starts_with?: String;
   race_ends_with?: String;
   race_not_ends_with?: String;
-  realm?: RealmWhereInput;
+  realm?: String;
+  realm_not?: String;
+  realm_in?: String[] | String;
+  realm_not_in?: String[] | String;
+  realm_lt?: String;
+  realm_lte?: String;
+  realm_gt?: String;
+  realm_gte?: String;
+  realm_contains?: String;
+  realm_not_contains?: String;
+  realm_starts_with?: String;
+  realm_not_starts_with?: String;
+  realm_ends_with?: String;
+  realm_not_ends_with?: String;
   AND?: PlayerWhereInput[] | PlayerWhereInput;
 }
-
-export interface RealmWhereInput {
-  _id?: ID_Input;
-  _id_not?: ID_Input;
-  _id_in?: ID_Input[] | ID_Input;
-  _id_not_in?: ID_Input[] | ID_Input;
-  _id_lt?: ID_Input;
-  _id_lte?: ID_Input;
-  _id_gt?: ID_Input;
-  _id_gte?: ID_Input;
-  _id_contains?: ID_Input;
-  _id_not_contains?: ID_Input;
-  _id_starts_with?: ID_Input;
-  _id_not_starts_with?: ID_Input;
-  _id_ends_with?: ID_Input;
-  _id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  population_some?: PlayerWhereInput;
-  AND?: RealmWhereInput[] | RealmWhereInput;
-}
-
-export type RealmWhereUniqueInput = AtLeastOne<{
-  _id: ID_Input;
-}>;
 
 export interface PlayerCreateInput {
   name: String;
   wins: Int;
   losses: Int;
   race: String;
-  realm: RealmCreateOneWithoutPopulationInput;
-}
-
-export interface RealmCreateOneWithoutPopulationInput {
-  create?: RealmCreateWithoutPopulationInput;
-  connect?: RealmWhereUniqueInput;
-}
-
-export interface RealmCreateWithoutPopulationInput {
-  name: String;
+  realm: String;
 }
 
 export interface PlayerUpdateInput {
@@ -292,23 +212,7 @@ export interface PlayerUpdateInput {
   wins?: Int;
   losses?: Int;
   race?: String;
-  realm?: RealmUpdateOneRequiredWithoutPopulationInput;
-}
-
-export interface RealmUpdateOneRequiredWithoutPopulationInput {
-  create?: RealmCreateWithoutPopulationInput;
-  update?: RealmUpdateWithoutPopulationDataInput;
-  upsert?: RealmUpsertWithoutPopulationInput;
-  connect?: RealmWhereUniqueInput;
-}
-
-export interface RealmUpdateWithoutPopulationDataInput {
-  name?: String;
-}
-
-export interface RealmUpsertWithoutPopulationInput {
-  update: RealmUpdateWithoutPopulationDataInput;
-  create: RealmCreateWithoutPopulationInput;
+  realm?: String;
 }
 
 export interface PlayerUpdateManyMutationInput {
@@ -316,144 +220,7 @@ export interface PlayerUpdateManyMutationInput {
   wins?: Int;
   losses?: Int;
   race?: String;
-}
-
-export interface RealmCreateInput {
-  name: String;
-  population?: PlayerCreateManyWithoutRealmInput;
-}
-
-export interface PlayerCreateManyWithoutRealmInput {
-  create?: PlayerCreateWithoutRealmInput[] | PlayerCreateWithoutRealmInput;
-  connect?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-}
-
-export interface PlayerCreateWithoutRealmInput {
-  name: String;
-  wins: Int;
-  losses: Int;
-  race: String;
-}
-
-export interface RealmUpdateInput {
-  name?: String;
-  population?: PlayerUpdateManyWithoutRealmInput;
-}
-
-export interface PlayerUpdateManyWithoutRealmInput {
-  create?: PlayerCreateWithoutRealmInput[] | PlayerCreateWithoutRealmInput;
-  delete?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-  connect?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-  set?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-  disconnect?: PlayerWhereUniqueInput[] | PlayerWhereUniqueInput;
-  update?:
-    | PlayerUpdateWithWhereUniqueWithoutRealmInput[]
-    | PlayerUpdateWithWhereUniqueWithoutRealmInput;
-  upsert?:
-    | PlayerUpsertWithWhereUniqueWithoutRealmInput[]
-    | PlayerUpsertWithWhereUniqueWithoutRealmInput;
-  deleteMany?: PlayerScalarWhereInput[] | PlayerScalarWhereInput;
-  updateMany?:
-    | PlayerUpdateManyWithWhereNestedInput[]
-    | PlayerUpdateManyWithWhereNestedInput;
-}
-
-export interface PlayerUpdateWithWhereUniqueWithoutRealmInput {
-  where: PlayerWhereUniqueInput;
-  data: PlayerUpdateWithoutRealmDataInput;
-}
-
-export interface PlayerUpdateWithoutRealmDataInput {
-  name?: String;
-  wins?: Int;
-  losses?: Int;
-  race?: String;
-}
-
-export interface PlayerUpsertWithWhereUniqueWithoutRealmInput {
-  where: PlayerWhereUniqueInput;
-  update: PlayerUpdateWithoutRealmDataInput;
-  create: PlayerCreateWithoutRealmInput;
-}
-
-export interface PlayerScalarWhereInput {
-  _id?: ID_Input;
-  _id_not?: ID_Input;
-  _id_in?: ID_Input[] | ID_Input;
-  _id_not_in?: ID_Input[] | ID_Input;
-  _id_lt?: ID_Input;
-  _id_lte?: ID_Input;
-  _id_gt?: ID_Input;
-  _id_gte?: ID_Input;
-  _id_contains?: ID_Input;
-  _id_not_contains?: ID_Input;
-  _id_starts_with?: ID_Input;
-  _id_not_starts_with?: ID_Input;
-  _id_ends_with?: ID_Input;
-  _id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  wins?: Int;
-  wins_not?: Int;
-  wins_in?: Int[] | Int;
-  wins_not_in?: Int[] | Int;
-  wins_lt?: Int;
-  wins_lte?: Int;
-  wins_gt?: Int;
-  wins_gte?: Int;
-  losses?: Int;
-  losses_not?: Int;
-  losses_in?: Int[] | Int;
-  losses_not_in?: Int[] | Int;
-  losses_lt?: Int;
-  losses_lte?: Int;
-  losses_gt?: Int;
-  losses_gte?: Int;
-  race?: String;
-  race_not?: String;
-  race_in?: String[] | String;
-  race_not_in?: String[] | String;
-  race_lt?: String;
-  race_lte?: String;
-  race_gt?: String;
-  race_gte?: String;
-  race_contains?: String;
-  race_not_contains?: String;
-  race_starts_with?: String;
-  race_not_starts_with?: String;
-  race_ends_with?: String;
-  race_not_ends_with?: String;
-  AND?: PlayerScalarWhereInput[] | PlayerScalarWhereInput;
-  OR?: PlayerScalarWhereInput[] | PlayerScalarWhereInput;
-  NOT?: PlayerScalarWhereInput[] | PlayerScalarWhereInput;
-}
-
-export interface PlayerUpdateManyWithWhereNestedInput {
-  where: PlayerScalarWhereInput;
-  data: PlayerUpdateManyDataInput;
-}
-
-export interface PlayerUpdateManyDataInput {
-  name?: String;
-  wins?: Int;
-  losses?: Int;
-  race?: String;
-}
-
-export interface RealmUpdateManyMutationInput {
-  name?: String;
+  realm?: String;
 }
 
 export interface PlayerSubscriptionWhereInput {
@@ -463,15 +230,6 @@ export interface PlayerSubscriptionWhereInput {
   updatedFields_contains_some?: String[] | String;
   node?: PlayerWhereInput;
   AND?: PlayerSubscriptionWhereInput[] | PlayerSubscriptionWhereInput;
-}
-
-export interface RealmSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: RealmWhereInput;
-  AND?: RealmSubscriptionWhereInput[] | RealmSubscriptionWhereInput;
 }
 
 export interface NodeNode {
@@ -484,6 +242,7 @@ export interface Player {
   wins: Int;
   losses: Int;
   race: String;
+  realm: String;
 }
 
 export interface PlayerPromise extends Promise<Player>, Fragmentable {
@@ -492,7 +251,7 @@ export interface PlayerPromise extends Promise<Player>, Fragmentable {
   wins: () => Promise<Int>;
   losses: () => Promise<Int>;
   race: () => Promise<String>;
-  realm: <T = RealmPromise>() => T;
+  realm: () => Promise<String>;
 }
 
 export interface PlayerSubscription
@@ -503,46 +262,7 @@ export interface PlayerSubscription
   wins: () => Promise<AsyncIterator<Int>>;
   losses: () => Promise<AsyncIterator<Int>>;
   race: () => Promise<AsyncIterator<String>>;
-  realm: <T = RealmSubscription>() => T;
-}
-
-export interface Realm {
-  _id: ID_Output;
-  name: String;
-}
-
-export interface RealmPromise extends Promise<Realm>, Fragmentable {
-  _id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  population: <T = FragmentableArray<Player>>(
-    args?: {
-      where?: PlayerWhereInput;
-      orderBy?: PlayerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface RealmSubscription
-  extends Promise<AsyncIterator<Realm>>,
-    Fragmentable {
-  _id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  population: <T = Promise<AsyncIterator<PlayerSubscription>>>(
-    args?: {
-      where?: PlayerWhereInput;
-      orderBy?: PlayerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+  realm: () => Promise<AsyncIterator<String>>;
 }
 
 export interface PlayerConnection {
@@ -622,60 +342,6 @@ export interface AggregatePlayerSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface RealmConnection {
-  pageInfo: PageInfo;
-  edges: RealmEdge[];
-}
-
-export interface RealmConnectionPromise
-  extends Promise<RealmConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<RealmEdge>>() => T;
-  aggregate: <T = AggregateRealmPromise>() => T;
-}
-
-export interface RealmConnectionSubscription
-  extends Promise<AsyncIterator<RealmConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<RealmEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateRealmSubscription>() => T;
-}
-
-export interface RealmEdge {
-  node: Realm;
-  cursor: String;
-}
-
-export interface RealmEdgePromise extends Promise<RealmEdge>, Fragmentable {
-  node: <T = RealmPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface RealmEdgeSubscription
-  extends Promise<AsyncIterator<RealmEdge>>,
-    Fragmentable {
-  node: <T = RealmSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateRealm {
-  count: Int;
-}
-
-export interface AggregateRealmPromise
-  extends Promise<AggregateRealm>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateRealmSubscription
-  extends Promise<AsyncIterator<AggregateRealm>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface BatchPayload {
   count: Long;
 }
@@ -723,6 +389,7 @@ export interface PlayerPreviousValues {
   wins: Int;
   losses: Int;
   race: String;
+  realm: String;
 }
 
 export interface PlayerPreviousValuesPromise
@@ -733,6 +400,7 @@ export interface PlayerPreviousValuesPromise
   wins: () => Promise<Int>;
   losses: () => Promise<Int>;
   race: () => Promise<String>;
+  realm: () => Promise<String>;
 }
 
 export interface PlayerPreviousValuesSubscription
@@ -743,50 +411,7 @@ export interface PlayerPreviousValuesSubscription
   wins: () => Promise<AsyncIterator<Int>>;
   losses: () => Promise<AsyncIterator<Int>>;
   race: () => Promise<AsyncIterator<String>>;
-}
-
-export interface RealmSubscriptionPayload {
-  mutation: MutationType;
-  node: Realm;
-  updatedFields: String[];
-  previousValues: RealmPreviousValues;
-}
-
-export interface RealmSubscriptionPayloadPromise
-  extends Promise<RealmSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = RealmPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = RealmPreviousValuesPromise>() => T;
-}
-
-export interface RealmSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<RealmSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = RealmSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = RealmPreviousValuesSubscription>() => T;
-}
-
-export interface RealmPreviousValues {
-  _id: ID_Output;
-  name: String;
-}
-
-export interface RealmPreviousValuesPromise
-  extends Promise<RealmPreviousValues>,
-    Fragmentable {
-  _id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface RealmPreviousValuesSubscription
-  extends Promise<AsyncIterator<RealmPreviousValues>>,
-    Fragmentable {
-  _id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  realm: () => Promise<AsyncIterator<String>>;
 }
 
 /*
@@ -819,10 +444,6 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "Player",
-    embedded: false
-  },
-  {
-    name: "Realm",
     embedded: false
   }
 ];
