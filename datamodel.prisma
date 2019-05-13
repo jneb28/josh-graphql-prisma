@@ -4,11 +4,11 @@ type Player @db(name: "players"){
   wins: Int!
   losses: Int!
   race: String!
-  realm: String!
+  realm: Realm!
 }
 
-# type Realm @db(name: "realms"){
-#   _id: ID! @id @unique
-#   name: String!
-#   population: [Player] @relation(link: INLINE)
-# }
+ type Realm @db(name: "realms"){
+   _id: ID! @id @unique
+   name: String!
+   population: [Player] @relation(link: INLINE)
+ }

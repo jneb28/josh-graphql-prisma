@@ -16,42 +16,75 @@ export interface NexusPrismaTypes {
     fields: {
       Query: QueryObject
       Player: PlayerObject
+      Realm: RealmObject
       PlayerConnection: PlayerConnectionObject
       PageInfo: PageInfoObject
       PlayerEdge: PlayerEdgeObject
       AggregatePlayer: AggregatePlayerObject
+      RealmConnection: RealmConnectionObject
+      RealmEdge: RealmEdgeObject
+      AggregateRealm: AggregateRealmObject
       Mutation: MutationObject
       BatchPayload: BatchPayloadObject
       Subscription: SubscriptionObject
       PlayerSubscriptionPayload: PlayerSubscriptionPayloadObject
       PlayerPreviousValues: PlayerPreviousValuesObject
+      RealmSubscriptionPayload: RealmSubscriptionPayloadObject
+      RealmPreviousValues: RealmPreviousValuesObject
     }
     fieldsDetails: {
       Query: QueryFieldDetails
       Player: PlayerFieldDetails
+      Realm: RealmFieldDetails
       PlayerConnection: PlayerConnectionFieldDetails
       PageInfo: PageInfoFieldDetails
       PlayerEdge: PlayerEdgeFieldDetails
       AggregatePlayer: AggregatePlayerFieldDetails
+      RealmConnection: RealmConnectionFieldDetails
+      RealmEdge: RealmEdgeFieldDetails
+      AggregateRealm: AggregateRealmFieldDetails
       Mutation: MutationFieldDetails
       BatchPayload: BatchPayloadFieldDetails
       Subscription: SubscriptionFieldDetails
       PlayerSubscriptionPayload: PlayerSubscriptionPayloadFieldDetails
       PlayerPreviousValues: PlayerPreviousValuesFieldDetails
+      RealmSubscriptionPayload: RealmSubscriptionPayloadFieldDetails
+      RealmPreviousValues: RealmPreviousValuesFieldDetails
     }
   }
   inputTypes: {
     fields: {
       PlayerWhereUniqueInput: PlayerWhereUniqueInputInputObject
       PlayerWhereInput: PlayerWhereInputInputObject
+      RealmWhereInput: RealmWhereInputInputObject
+      RealmWhereUniqueInput: RealmWhereUniqueInputInputObject
       PlayerCreateInput: PlayerCreateInputInputObject
+      RealmCreateOneWithoutPopulationInput: RealmCreateOneWithoutPopulationInputInputObject
+      RealmCreateWithoutPopulationInput: RealmCreateWithoutPopulationInputInputObject
       PlayerUpdateInput: PlayerUpdateInputInputObject
+      RealmUpdateOneRequiredWithoutPopulationInput: RealmUpdateOneRequiredWithoutPopulationInputInputObject
+      RealmUpdateWithoutPopulationDataInput: RealmUpdateWithoutPopulationDataInputInputObject
+      RealmUpsertWithoutPopulationInput: RealmUpsertWithoutPopulationInputInputObject
       PlayerUpdateManyMutationInput: PlayerUpdateManyMutationInputInputObject
+      RealmCreateInput: RealmCreateInputInputObject
+      PlayerCreateManyWithoutRealmInput: PlayerCreateManyWithoutRealmInputInputObject
+      PlayerCreateWithoutRealmInput: PlayerCreateWithoutRealmInputInputObject
+      RealmUpdateInput: RealmUpdateInputInputObject
+      PlayerUpdateManyWithoutRealmInput: PlayerUpdateManyWithoutRealmInputInputObject
+      PlayerUpdateWithWhereUniqueWithoutRealmInput: PlayerUpdateWithWhereUniqueWithoutRealmInputInputObject
+      PlayerUpdateWithoutRealmDataInput: PlayerUpdateWithoutRealmDataInputInputObject
+      PlayerUpsertWithWhereUniqueWithoutRealmInput: PlayerUpsertWithWhereUniqueWithoutRealmInputInputObject
+      PlayerScalarWhereInput: PlayerScalarWhereInputInputObject
+      PlayerUpdateManyWithWhereNestedInput: PlayerUpdateManyWithWhereNestedInputInputObject
+      PlayerUpdateManyDataInput: PlayerUpdateManyDataInputInputObject
+      RealmUpdateManyMutationInput: RealmUpdateManyMutationInputInputObject
       PlayerSubscriptionWhereInput: PlayerSubscriptionWhereInputInputObject
+      RealmSubscriptionWhereInput: RealmSubscriptionWhereInputInputObject
     }
   }
   enumTypes: {
     PlayerOrderByInput: PlayerOrderByInputValues,
+    RealmOrderByInput: RealmOrderByInputValues,
     MutationType: MutationTypeValues,
   }
 }
@@ -63,11 +96,17 @@ type QueryObject =
   | { name: 'player', args?: QueryPlayerArgs[] | false, alias?: string  } 
   | { name: 'players', args?: QueryPlayersArgs[] | false, alias?: string  } 
   | { name: 'playersConnection', args?: QueryPlayersConnectionArgs[] | false, alias?: string  } 
+  | { name: 'realm', args?: QueryRealmArgs[] | false, alias?: string  } 
+  | { name: 'realms', args?: QueryRealmsArgs[] | false, alias?: string  } 
+  | { name: 'realmsConnection', args?: QueryRealmsConnectionArgs[] | false, alias?: string  } 
 
 type QueryFields =
   | 'player'
   | 'players'
   | 'playersConnection'
+  | 'realm'
+  | 'realms'
+  | 'realmsConnection'
 
 
 type QueryPlayerArgs =
@@ -81,6 +120,24 @@ type QueryPlayersArgs =
   | 'first'
   | 'last'
 type QueryPlayersConnectionArgs =
+  | 'where'
+  | 'orderBy'
+  | 'skip'
+  | 'after'
+  | 'before'
+  | 'first'
+  | 'last'
+type QueryRealmArgs =
+  | 'where'
+type QueryRealmsArgs =
+  | 'where'
+  | 'orderBy'
+  | 'skip'
+  | 'after'
+  | 'before'
+  | 'first'
+  | 'last'
+type QueryRealmsConnectionArgs =
   | 'where'
   | 'orderBy'
   | 'skip'
@@ -129,6 +186,45 @@ export interface QueryFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.PlayerConnection> | prisma.PlayerConnection
+  }
+  realm: {
+    type: 'Realm'
+    args: Record<QueryRealmArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"Query">,
+      args: { where: RealmWhereUniqueInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Realm | null> | prisma.Realm | null
+  }
+  realms: {
+    type: 'Realm'
+    args: Record<QueryRealmsArgs, core.NexusArgDef<string>>
+    description: string
+    list: true
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Query">,
+      args: { where?: RealmWhereInput | null, orderBy?: prisma.RealmOrderByInput | null, skip?: number | null, after?: string | null, before?: string | null, first?: number | null, last?: number | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Realm[]> | prisma.Realm[]
+  }
+  realmsConnection: {
+    type: 'RealmConnection'
+    args: Record<QueryRealmsConnectionArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Query">,
+      args: { where?: RealmWhereInput | null, orderBy?: prisma.RealmOrderByInput | null, skip?: number | null, after?: string | null, before?: string | null, first?: number | null, last?: number | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.RealmConnection> | prisma.RealmConnection
   }
 }
   
@@ -198,12 +294,74 @@ export interface PlayerFieldDetails {
     resolve: undefined
   }
   realm: {
+    type: 'Realm'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Player">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Realm> | prisma.Realm
+  }
+}
+  
+
+// Types for Realm
+
+type RealmObject =
+  | RealmFields
+  | { name: '_id', args?: [] | false, alias?: string  } 
+  | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'population', args?: RealmPopulationArgs[] | false, alias?: string  } 
+
+type RealmFields =
+  | '_id'
+  | 'name'
+  | 'population'
+
+
+type RealmPopulationArgs =
+  | 'where'
+  | 'orderBy'
+  | 'skip'
+  | 'after'
+  | 'before'
+  | 'first'
+  | 'last'
+  
+
+export interface RealmFieldDetails {
+  _id: {
+    type: 'ID'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  name: {
     type: 'String'
     args: {}
     description: string
     list: undefined
     nullable: false
     resolve: undefined
+  }
+  population: {
+    type: 'Player'
+    args: Record<RealmPopulationArgs, core.NexusArgDef<string>>
+    description: string
+    list: true
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Realm">,
+      args: { where?: PlayerWhereInput | null, orderBy?: prisma.PlayerOrderByInput | null, skip?: number | null, after?: string | null, before?: string | null, first?: number | null, last?: number | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Player[]> | prisma.Player[]
   }
 }
   
@@ -388,6 +546,131 @@ export interface AggregatePlayerFieldDetails {
 }
   
 
+// Types for RealmConnection
+
+type RealmConnectionObject =
+  | RealmConnectionFields
+  | { name: 'pageInfo', args?: [] | false, alias?: string  } 
+  | { name: 'edges', args?: [] | false, alias?: string  } 
+  | { name: 'aggregate', args?: [] | false, alias?: string  } 
+
+type RealmConnectionFields =
+  | 'pageInfo'
+  | 'edges'
+  | 'aggregate'
+
+
+
+  
+
+export interface RealmConnectionFieldDetails {
+  pageInfo: {
+    type: 'PageInfo'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"RealmConnection">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.PageInfo> | prisma.PageInfo
+  }
+  edges: {
+    type: 'RealmEdge'
+    args: {}
+    description: string
+    list: true
+    nullable: false
+    resolve: (
+      root: core.RootValue<"RealmConnection">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.RealmEdge[]> | prisma.RealmEdge[]
+  }
+  aggregate: {
+    type: 'AggregateRealm'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"RealmConnection">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.AggregateRealm> | prisma.AggregateRealm
+  }
+}
+  
+
+// Types for RealmEdge
+
+type RealmEdgeObject =
+  | RealmEdgeFields
+  | { name: 'node', args?: [] | false, alias?: string  } 
+  | { name: 'cursor', args?: [] | false, alias?: string  } 
+
+type RealmEdgeFields =
+  | 'node'
+  | 'cursor'
+
+
+
+  
+
+export interface RealmEdgeFieldDetails {
+  node: {
+    type: 'Realm'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"RealmEdge">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Realm> | prisma.Realm
+  }
+  cursor: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+}
+  
+
+// Types for AggregateRealm
+
+type AggregateRealmObject =
+  | AggregateRealmFields
+  | { name: 'count', args?: [] | false, alias?: string  } 
+
+type AggregateRealmFields =
+  | 'count'
+
+
+
+  
+
+export interface AggregateRealmFieldDetails {
+  count: {
+    type: 'Int'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+}
+  
+
 // Types for Mutation
 
 type MutationObject =
@@ -398,6 +681,12 @@ type MutationObject =
   | { name: 'upsertPlayer', args?: MutationUpsertPlayerArgs[] | false, alias?: string  } 
   | { name: 'deletePlayer', args?: MutationDeletePlayerArgs[] | false, alias?: string  } 
   | { name: 'deleteManyPlayers', args?: MutationDeleteManyPlayersArgs[] | false, alias?: string  } 
+  | { name: 'createRealm', args?: MutationCreateRealmArgs[] | false, alias?: string  } 
+  | { name: 'updateRealm', args?: MutationUpdateRealmArgs[] | false, alias?: string  } 
+  | { name: 'updateManyRealms', args?: MutationUpdateManyRealmsArgs[] | false, alias?: string  } 
+  | { name: 'upsertRealm', args?: MutationUpsertRealmArgs[] | false, alias?: string  } 
+  | { name: 'deleteRealm', args?: MutationDeleteRealmArgs[] | false, alias?: string  } 
+  | { name: 'deleteManyRealms', args?: MutationDeleteManyRealmsArgs[] | false, alias?: string  } 
 
 type MutationFields =
   | 'createPlayer'
@@ -406,6 +695,12 @@ type MutationFields =
   | 'upsertPlayer'
   | 'deletePlayer'
   | 'deleteManyPlayers'
+  | 'createRealm'
+  | 'updateRealm'
+  | 'updateManyRealms'
+  | 'upsertRealm'
+  | 'deleteRealm'
+  | 'deleteManyRealms'
 
 
 type MutationCreatePlayerArgs =
@@ -423,6 +718,22 @@ type MutationUpsertPlayerArgs =
 type MutationDeletePlayerArgs =
   | 'where'
 type MutationDeleteManyPlayersArgs =
+  | 'where'
+type MutationCreateRealmArgs =
+  | 'data'
+type MutationUpdateRealmArgs =
+  | 'data'
+  | 'where'
+type MutationUpdateManyRealmsArgs =
+  | 'data'
+  | 'where'
+type MutationUpsertRealmArgs =
+  | 'where'
+  | 'create'
+  | 'update'
+type MutationDeleteRealmArgs =
+  | 'where'
+type MutationDeleteManyRealmsArgs =
   | 'where'
   
 
@@ -505,6 +816,84 @@ export interface MutationFieldDetails {
       info?: GraphQLResolveInfo
     ) => Promise<prisma.BatchPayload> | prisma.BatchPayload
   }
+  createRealm: {
+    type: 'Realm'
+    args: Record<MutationCreateRealmArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { data: RealmCreateInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Realm> | prisma.Realm
+  }
+  updateRealm: {
+    type: 'Realm'
+    args: Record<MutationUpdateRealmArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { data: RealmUpdateInput, where: RealmWhereUniqueInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Realm | null> | prisma.Realm | null
+  }
+  updateManyRealms: {
+    type: 'BatchPayload'
+    args: Record<MutationUpdateManyRealmsArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { data: RealmUpdateManyMutationInput, where?: RealmWhereInput | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.BatchPayload> | prisma.BatchPayload
+  }
+  upsertRealm: {
+    type: 'Realm'
+    args: Record<MutationUpsertRealmArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { where: RealmWhereUniqueInput, create: RealmCreateInput, update: RealmUpdateInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Realm> | prisma.Realm
+  }
+  deleteRealm: {
+    type: 'Realm'
+    args: Record<MutationDeleteRealmArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { where: RealmWhereUniqueInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Realm | null> | prisma.Realm | null
+  }
+  deleteManyRealms: {
+    type: 'BatchPayload'
+    args: Record<MutationDeleteManyRealmsArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { where?: RealmWhereInput | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.BatchPayload> | prisma.BatchPayload
+  }
 }
   
 
@@ -538,12 +927,16 @@ export interface BatchPayloadFieldDetails {
 type SubscriptionObject =
   | SubscriptionFields
   | { name: 'player', args?: SubscriptionPlayerArgs[] | false, alias?: string  } 
+  | { name: 'realm', args?: SubscriptionRealmArgs[] | false, alias?: string  } 
 
 type SubscriptionFields =
   | 'player'
+  | 'realm'
 
 
 type SubscriptionPlayerArgs =
+  | 'where'
+type SubscriptionRealmArgs =
   | 'where'
   
 
@@ -560,6 +953,19 @@ export interface SubscriptionFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.PlayerSubscriptionPayload | null> | prisma.PlayerSubscriptionPayload | null
+  }
+  realm: {
+    type: 'RealmSubscriptionPayload'
+    args: Record<SubscriptionRealmArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"Subscription">,
+      args: { where?: RealmSubscriptionWhereInput | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.RealmSubscriptionPayload | null> | prisma.RealmSubscriptionPayload | null
   }
 }
   
@@ -643,7 +1049,6 @@ type PlayerPreviousValuesObject =
   | { name: 'wins', args?: [] | false, alias?: string  } 
   | { name: 'losses', args?: [] | false, alias?: string  } 
   | { name: 'race', args?: [] | false, alias?: string  } 
-  | { name: 'realm', args?: [] | false, alias?: string  } 
 
 type PlayerPreviousValuesFields =
   | '_id'
@@ -651,7 +1056,6 @@ type PlayerPreviousValuesFields =
   | 'wins'
   | 'losses'
   | 'race'
-  | 'realm'
 
 
 
@@ -698,7 +1102,104 @@ export interface PlayerPreviousValuesFieldDetails {
     nullable: false
     resolve: undefined
   }
-  realm: {
+}
+  
+
+// Types for RealmSubscriptionPayload
+
+type RealmSubscriptionPayloadObject =
+  | RealmSubscriptionPayloadFields
+  | { name: 'mutation', args?: [] | false, alias?: string  } 
+  | { name: 'node', args?: [] | false, alias?: string  } 
+  | { name: 'updatedFields', args?: [] | false, alias?: string  } 
+  | { name: 'previousValues', args?: [] | false, alias?: string  } 
+
+type RealmSubscriptionPayloadFields =
+  | 'mutation'
+  | 'node'
+  | 'updatedFields'
+  | 'previousValues'
+
+
+
+  
+
+export interface RealmSubscriptionPayloadFieldDetails {
+  mutation: {
+    type: 'MutationType'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"RealmSubscriptionPayload">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.MutationType> | prisma.MutationType
+  }
+  node: {
+    type: 'Realm'
+    args: {}
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"RealmSubscriptionPayload">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Realm | null> | prisma.Realm | null
+  }
+  updatedFields: {
+    type: 'String'
+    args: {}
+    description: string
+    list: true
+    nullable: false
+    resolve: undefined
+  }
+  previousValues: {
+    type: 'RealmPreviousValues'
+    args: {}
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"RealmSubscriptionPayload">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.RealmPreviousValues | null> | prisma.RealmPreviousValues | null
+  }
+}
+  
+
+// Types for RealmPreviousValues
+
+type RealmPreviousValuesObject =
+  | RealmPreviousValuesFields
+  | { name: '_id', args?: [] | false, alias?: string  } 
+  | { name: 'name', args?: [] | false, alias?: string  } 
+
+type RealmPreviousValuesFields =
+  | '_id'
+  | 'name'
+
+
+
+  
+
+export interface RealmPreviousValuesFieldDetails {
+  _id: {
+    type: 'ID'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  name: {
     type: 'String'
     args: {}
     description: string
@@ -776,20 +1277,7 @@ export interface PlayerWhereInput {
   race_not_starts_with?: string | null
   race_ends_with?: string | null
   race_not_ends_with?: string | null
-  realm?: string | null
-  realm_not?: string | null
-  realm_in?: string[]
-  realm_not_in?: string[]
-  realm_lt?: string | null
-  realm_lte?: string | null
-  realm_gt?: string | null
-  realm_gte?: string | null
-  realm_contains?: string | null
-  realm_not_contains?: string | null
-  realm_starts_with?: string | null
-  realm_not_starts_with?: string | null
-  realm_ends_with?: string | null
-  realm_not_ends_with?: string | null
+  realm?: RealmWhereInput | null
   AND?: PlayerWhereInput[]
 }
 export type PlayerWhereInputInputObject =
@@ -853,20 +1341,79 @@ export type PlayerWhereInputInputObject =
   | { name: 'race_ends_with', alias?: string  } 
   | { name: 'race_not_ends_with', alias?: string  } 
   | { name: 'realm', alias?: string  } 
-  | { name: 'realm_not', alias?: string  } 
-  | { name: 'realm_in', alias?: string  } 
-  | { name: 'realm_not_in', alias?: string  } 
-  | { name: 'realm_lt', alias?: string  } 
-  | { name: 'realm_lte', alias?: string  } 
-  | { name: 'realm_gt', alias?: string  } 
-  | { name: 'realm_gte', alias?: string  } 
-  | { name: 'realm_contains', alias?: string  } 
-  | { name: 'realm_not_contains', alias?: string  } 
-  | { name: 'realm_starts_with', alias?: string  } 
-  | { name: 'realm_not_starts_with', alias?: string  } 
-  | { name: 'realm_ends_with', alias?: string  } 
-  | { name: 'realm_not_ends_with', alias?: string  } 
   | { name: 'AND', alias?: string  } 
+  
+export interface RealmWhereInput {
+  _id?: string | null
+  _id_not?: string | null
+  _id_in?: string[]
+  _id_not_in?: string[]
+  _id_lt?: string | null
+  _id_lte?: string | null
+  _id_gt?: string | null
+  _id_gte?: string | null
+  _id_contains?: string | null
+  _id_not_contains?: string | null
+  _id_starts_with?: string | null
+  _id_not_starts_with?: string | null
+  _id_ends_with?: string | null
+  _id_not_ends_with?: string | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[]
+  name_not_in?: string[]
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
+  population_some?: PlayerWhereInput | null
+  AND?: RealmWhereInput[]
+}
+export type RealmWhereInputInputObject =
+  | Extract<keyof RealmWhereInput, string>
+  | { name: '_id', alias?: string  } 
+  | { name: '_id_not', alias?: string  } 
+  | { name: '_id_in', alias?: string  } 
+  | { name: '_id_not_in', alias?: string  } 
+  | { name: '_id_lt', alias?: string  } 
+  | { name: '_id_lte', alias?: string  } 
+  | { name: '_id_gt', alias?: string  } 
+  | { name: '_id_gte', alias?: string  } 
+  | { name: '_id_contains', alias?: string  } 
+  | { name: '_id_not_contains', alias?: string  } 
+  | { name: '_id_starts_with', alias?: string  } 
+  | { name: '_id_not_starts_with', alias?: string  } 
+  | { name: '_id_ends_with', alias?: string  } 
+  | { name: '_id_not_ends_with', alias?: string  } 
+  | { name: 'name', alias?: string  } 
+  | { name: 'name_not', alias?: string  } 
+  | { name: 'name_in', alias?: string  } 
+  | { name: 'name_not_in', alias?: string  } 
+  | { name: 'name_lt', alias?: string  } 
+  | { name: 'name_lte', alias?: string  } 
+  | { name: 'name_gt', alias?: string  } 
+  | { name: 'name_gte', alias?: string  } 
+  | { name: 'name_contains', alias?: string  } 
+  | { name: 'name_not_contains', alias?: string  } 
+  | { name: 'name_starts_with', alias?: string  } 
+  | { name: 'name_not_starts_with', alias?: string  } 
+  | { name: 'name_ends_with', alias?: string  } 
+  | { name: 'name_not_ends_with', alias?: string  } 
+  | { name: 'population_some', alias?: string  } 
+  | { name: 'AND', alias?: string  } 
+  
+export interface RealmWhereUniqueInput {
+  _id?: string | null
+}
+export type RealmWhereUniqueInputInputObject =
+  | Extract<keyof RealmWhereUniqueInput, string>
+  | { name: '_id', alias?: string  } 
   
 export interface PlayerCreateInput {
   _id?: string | null
@@ -874,7 +1421,7 @@ export interface PlayerCreateInput {
   wins?: number
   losses?: number
   race?: string
-  realm?: string
+  realm?: RealmCreateOneWithoutPopulationInput
 }
 export type PlayerCreateInputInputObject =
   | Extract<keyof PlayerCreateInput, string>
@@ -885,12 +1432,30 @@ export type PlayerCreateInputInputObject =
   | { name: 'race', alias?: string  } 
   | { name: 'realm', alias?: string  } 
   
+export interface RealmCreateOneWithoutPopulationInput {
+  create?: RealmCreateWithoutPopulationInput | null
+  connect?: RealmWhereUniqueInput | null
+}
+export type RealmCreateOneWithoutPopulationInputInputObject =
+  | Extract<keyof RealmCreateOneWithoutPopulationInput, string>
+  | { name: 'create', alias?: string  } 
+  | { name: 'connect', alias?: string  } 
+  
+export interface RealmCreateWithoutPopulationInput {
+  _id?: string | null
+  name?: string
+}
+export type RealmCreateWithoutPopulationInputInputObject =
+  | Extract<keyof RealmCreateWithoutPopulationInput, string>
+  | { name: '_id', alias?: string  } 
+  | { name: 'name', alias?: string  } 
+  
 export interface PlayerUpdateInput {
   name?: string | null
   wins?: number | null
   losses?: number | null
   race?: string | null
-  realm?: string | null
+  realm?: RealmUpdateOneRequiredWithoutPopulationInput | null
 }
 export type PlayerUpdateInputInputObject =
   | Extract<keyof PlayerUpdateInput, string>
@@ -900,12 +1465,40 @@ export type PlayerUpdateInputInputObject =
   | { name: 'race', alias?: string  } 
   | { name: 'realm', alias?: string  } 
   
+export interface RealmUpdateOneRequiredWithoutPopulationInput {
+  create?: RealmCreateWithoutPopulationInput | null
+  update?: RealmUpdateWithoutPopulationDataInput | null
+  upsert?: RealmUpsertWithoutPopulationInput | null
+  connect?: RealmWhereUniqueInput | null
+}
+export type RealmUpdateOneRequiredWithoutPopulationInputInputObject =
+  | Extract<keyof RealmUpdateOneRequiredWithoutPopulationInput, string>
+  | { name: 'create', alias?: string  } 
+  | { name: 'update', alias?: string  } 
+  | { name: 'upsert', alias?: string  } 
+  | { name: 'connect', alias?: string  } 
+  
+export interface RealmUpdateWithoutPopulationDataInput {
+  name?: string | null
+}
+export type RealmUpdateWithoutPopulationDataInputInputObject =
+  | Extract<keyof RealmUpdateWithoutPopulationDataInput, string>
+  | { name: 'name', alias?: string  } 
+  
+export interface RealmUpsertWithoutPopulationInput {
+  update?: RealmUpdateWithoutPopulationDataInput
+  create?: RealmCreateWithoutPopulationInput
+}
+export type RealmUpsertWithoutPopulationInputInputObject =
+  | Extract<keyof RealmUpsertWithoutPopulationInput, string>
+  | { name: 'update', alias?: string  } 
+  | { name: 'create', alias?: string  } 
+  
 export interface PlayerUpdateManyMutationInput {
   name?: string | null
   wins?: number | null
   losses?: number | null
   race?: string | null
-  realm?: string | null
 }
 export type PlayerUpdateManyMutationInputInputObject =
   | Extract<keyof PlayerUpdateManyMutationInput, string>
@@ -913,7 +1506,262 @@ export type PlayerUpdateManyMutationInputInputObject =
   | { name: 'wins', alias?: string  } 
   | { name: 'losses', alias?: string  } 
   | { name: 'race', alias?: string  } 
-  | { name: 'realm', alias?: string  } 
+  
+export interface RealmCreateInput {
+  _id?: string | null
+  name?: string
+  population?: PlayerCreateManyWithoutRealmInput | null
+}
+export type RealmCreateInputInputObject =
+  | Extract<keyof RealmCreateInput, string>
+  | { name: '_id', alias?: string  } 
+  | { name: 'name', alias?: string  } 
+  | { name: 'population', alias?: string  } 
+  
+export interface PlayerCreateManyWithoutRealmInput {
+  create?: PlayerCreateWithoutRealmInput[]
+  connect?: PlayerWhereUniqueInput[]
+}
+export type PlayerCreateManyWithoutRealmInputInputObject =
+  | Extract<keyof PlayerCreateManyWithoutRealmInput, string>
+  | { name: 'create', alias?: string  } 
+  | { name: 'connect', alias?: string  } 
+  
+export interface PlayerCreateWithoutRealmInput {
+  _id?: string | null
+  name?: string
+  wins?: number
+  losses?: number
+  race?: string
+}
+export type PlayerCreateWithoutRealmInputInputObject =
+  | Extract<keyof PlayerCreateWithoutRealmInput, string>
+  | { name: '_id', alias?: string  } 
+  | { name: 'name', alias?: string  } 
+  | { name: 'wins', alias?: string  } 
+  | { name: 'losses', alias?: string  } 
+  | { name: 'race', alias?: string  } 
+  
+export interface RealmUpdateInput {
+  name?: string | null
+  population?: PlayerUpdateManyWithoutRealmInput | null
+}
+export type RealmUpdateInputInputObject =
+  | Extract<keyof RealmUpdateInput, string>
+  | { name: 'name', alias?: string  } 
+  | { name: 'population', alias?: string  } 
+  
+export interface PlayerUpdateManyWithoutRealmInput {
+  create?: PlayerCreateWithoutRealmInput[]
+  delete?: PlayerWhereUniqueInput[]
+  connect?: PlayerWhereUniqueInput[]
+  set?: PlayerWhereUniqueInput[]
+  disconnect?: PlayerWhereUniqueInput[]
+  update?: PlayerUpdateWithWhereUniqueWithoutRealmInput[]
+  upsert?: PlayerUpsertWithWhereUniqueWithoutRealmInput[]
+  deleteMany?: PlayerScalarWhereInput[]
+  updateMany?: PlayerUpdateManyWithWhereNestedInput[]
+}
+export type PlayerUpdateManyWithoutRealmInputInputObject =
+  | Extract<keyof PlayerUpdateManyWithoutRealmInput, string>
+  | { name: 'create', alias?: string  } 
+  | { name: 'delete', alias?: string  } 
+  | { name: 'connect', alias?: string  } 
+  | { name: 'set', alias?: string  } 
+  | { name: 'disconnect', alias?: string  } 
+  | { name: 'update', alias?: string  } 
+  | { name: 'upsert', alias?: string  } 
+  | { name: 'deleteMany', alias?: string  } 
+  | { name: 'updateMany', alias?: string  } 
+  
+export interface PlayerUpdateWithWhereUniqueWithoutRealmInput {
+  where?: PlayerWhereUniqueInput
+  data?: PlayerUpdateWithoutRealmDataInput
+}
+export type PlayerUpdateWithWhereUniqueWithoutRealmInputInputObject =
+  | Extract<keyof PlayerUpdateWithWhereUniqueWithoutRealmInput, string>
+  | { name: 'where', alias?: string  } 
+  | { name: 'data', alias?: string  } 
+  
+export interface PlayerUpdateWithoutRealmDataInput {
+  name?: string | null
+  wins?: number | null
+  losses?: number | null
+  race?: string | null
+}
+export type PlayerUpdateWithoutRealmDataInputInputObject =
+  | Extract<keyof PlayerUpdateWithoutRealmDataInput, string>
+  | { name: 'name', alias?: string  } 
+  | { name: 'wins', alias?: string  } 
+  | { name: 'losses', alias?: string  } 
+  | { name: 'race', alias?: string  } 
+  
+export interface PlayerUpsertWithWhereUniqueWithoutRealmInput {
+  where?: PlayerWhereUniqueInput
+  update?: PlayerUpdateWithoutRealmDataInput
+  create?: PlayerCreateWithoutRealmInput
+}
+export type PlayerUpsertWithWhereUniqueWithoutRealmInputInputObject =
+  | Extract<keyof PlayerUpsertWithWhereUniqueWithoutRealmInput, string>
+  | { name: 'where', alias?: string  } 
+  | { name: 'update', alias?: string  } 
+  | { name: 'create', alias?: string  } 
+  
+export interface PlayerScalarWhereInput {
+  _id?: string | null
+  _id_not?: string | null
+  _id_in?: string[]
+  _id_not_in?: string[]
+  _id_lt?: string | null
+  _id_lte?: string | null
+  _id_gt?: string | null
+  _id_gte?: string | null
+  _id_contains?: string | null
+  _id_not_contains?: string | null
+  _id_starts_with?: string | null
+  _id_not_starts_with?: string | null
+  _id_ends_with?: string | null
+  _id_not_ends_with?: string | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[]
+  name_not_in?: string[]
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
+  wins?: number | null
+  wins_not?: number | null
+  wins_in?: number[]
+  wins_not_in?: number[]
+  wins_lt?: number | null
+  wins_lte?: number | null
+  wins_gt?: number | null
+  wins_gte?: number | null
+  losses?: number | null
+  losses_not?: number | null
+  losses_in?: number[]
+  losses_not_in?: number[]
+  losses_lt?: number | null
+  losses_lte?: number | null
+  losses_gt?: number | null
+  losses_gte?: number | null
+  race?: string | null
+  race_not?: string | null
+  race_in?: string[]
+  race_not_in?: string[]
+  race_lt?: string | null
+  race_lte?: string | null
+  race_gt?: string | null
+  race_gte?: string | null
+  race_contains?: string | null
+  race_not_contains?: string | null
+  race_starts_with?: string | null
+  race_not_starts_with?: string | null
+  race_ends_with?: string | null
+  race_not_ends_with?: string | null
+  AND?: PlayerScalarWhereInput[]
+  OR?: PlayerScalarWhereInput[]
+  NOT?: PlayerScalarWhereInput[]
+}
+export type PlayerScalarWhereInputInputObject =
+  | Extract<keyof PlayerScalarWhereInput, string>
+  | { name: '_id', alias?: string  } 
+  | { name: '_id_not', alias?: string  } 
+  | { name: '_id_in', alias?: string  } 
+  | { name: '_id_not_in', alias?: string  } 
+  | { name: '_id_lt', alias?: string  } 
+  | { name: '_id_lte', alias?: string  } 
+  | { name: '_id_gt', alias?: string  } 
+  | { name: '_id_gte', alias?: string  } 
+  | { name: '_id_contains', alias?: string  } 
+  | { name: '_id_not_contains', alias?: string  } 
+  | { name: '_id_starts_with', alias?: string  } 
+  | { name: '_id_not_starts_with', alias?: string  } 
+  | { name: '_id_ends_with', alias?: string  } 
+  | { name: '_id_not_ends_with', alias?: string  } 
+  | { name: 'name', alias?: string  } 
+  | { name: 'name_not', alias?: string  } 
+  | { name: 'name_in', alias?: string  } 
+  | { name: 'name_not_in', alias?: string  } 
+  | { name: 'name_lt', alias?: string  } 
+  | { name: 'name_lte', alias?: string  } 
+  | { name: 'name_gt', alias?: string  } 
+  | { name: 'name_gte', alias?: string  } 
+  | { name: 'name_contains', alias?: string  } 
+  | { name: 'name_not_contains', alias?: string  } 
+  | { name: 'name_starts_with', alias?: string  } 
+  | { name: 'name_not_starts_with', alias?: string  } 
+  | { name: 'name_ends_with', alias?: string  } 
+  | { name: 'name_not_ends_with', alias?: string  } 
+  | { name: 'wins', alias?: string  } 
+  | { name: 'wins_not', alias?: string  } 
+  | { name: 'wins_in', alias?: string  } 
+  | { name: 'wins_not_in', alias?: string  } 
+  | { name: 'wins_lt', alias?: string  } 
+  | { name: 'wins_lte', alias?: string  } 
+  | { name: 'wins_gt', alias?: string  } 
+  | { name: 'wins_gte', alias?: string  } 
+  | { name: 'losses', alias?: string  } 
+  | { name: 'losses_not', alias?: string  } 
+  | { name: 'losses_in', alias?: string  } 
+  | { name: 'losses_not_in', alias?: string  } 
+  | { name: 'losses_lt', alias?: string  } 
+  | { name: 'losses_lte', alias?: string  } 
+  | { name: 'losses_gt', alias?: string  } 
+  | { name: 'losses_gte', alias?: string  } 
+  | { name: 'race', alias?: string  } 
+  | { name: 'race_not', alias?: string  } 
+  | { name: 'race_in', alias?: string  } 
+  | { name: 'race_not_in', alias?: string  } 
+  | { name: 'race_lt', alias?: string  } 
+  | { name: 'race_lte', alias?: string  } 
+  | { name: 'race_gt', alias?: string  } 
+  | { name: 'race_gte', alias?: string  } 
+  | { name: 'race_contains', alias?: string  } 
+  | { name: 'race_not_contains', alias?: string  } 
+  | { name: 'race_starts_with', alias?: string  } 
+  | { name: 'race_not_starts_with', alias?: string  } 
+  | { name: 'race_ends_with', alias?: string  } 
+  | { name: 'race_not_ends_with', alias?: string  } 
+  | { name: 'AND', alias?: string  } 
+  | { name: 'OR', alias?: string  } 
+  | { name: 'NOT', alias?: string  } 
+  
+export interface PlayerUpdateManyWithWhereNestedInput {
+  where?: PlayerScalarWhereInput
+  data?: PlayerUpdateManyDataInput
+}
+export type PlayerUpdateManyWithWhereNestedInputInputObject =
+  | Extract<keyof PlayerUpdateManyWithWhereNestedInput, string>
+  | { name: 'where', alias?: string  } 
+  | { name: 'data', alias?: string  } 
+  
+export interface PlayerUpdateManyDataInput {
+  name?: string | null
+  wins?: number | null
+  losses?: number | null
+  race?: string | null
+}
+export type PlayerUpdateManyDataInputInputObject =
+  | Extract<keyof PlayerUpdateManyDataInput, string>
+  | { name: 'name', alias?: string  } 
+  | { name: 'wins', alias?: string  } 
+  | { name: 'losses', alias?: string  } 
+  | { name: 'race', alias?: string  } 
+  
+export interface RealmUpdateManyMutationInput {
+  name?: string | null
+}
+export type RealmUpdateManyMutationInputInputObject =
+  | Extract<keyof RealmUpdateManyMutationInput, string>
+  | { name: 'name', alias?: string  } 
   
 export interface PlayerSubscriptionWhereInput {
   mutation_in?: prisma.MutationType[]
@@ -925,6 +1773,23 @@ export interface PlayerSubscriptionWhereInput {
 }
 export type PlayerSubscriptionWhereInputInputObject =
   | Extract<keyof PlayerSubscriptionWhereInput, string>
+  | { name: 'mutation_in', alias?: string  } 
+  | { name: 'updatedFields_contains', alias?: string  } 
+  | { name: 'updatedFields_contains_every', alias?: string  } 
+  | { name: 'updatedFields_contains_some', alias?: string  } 
+  | { name: 'node', alias?: string  } 
+  | { name: 'AND', alias?: string  } 
+  
+export interface RealmSubscriptionWhereInput {
+  mutation_in?: prisma.MutationType[]
+  updatedFields_contains?: string | null
+  updatedFields_contains_every?: string[]
+  updatedFields_contains_some?: string[]
+  node?: RealmWhereInput | null
+  AND?: RealmSubscriptionWhereInput[]
+}
+export type RealmSubscriptionWhereInputInputObject =
+  | Extract<keyof RealmSubscriptionWhereInput, string>
   | { name: 'mutation_in', alias?: string  } 
   | { name: 'updatedFields_contains', alias?: string  } 
   | { name: 'updatedFields_contains_every', alias?: string  } 
@@ -944,8 +1809,12 @@ export type PlayerOrderByInputValues =
   | 'losses_DESC'
   | 'race_ASC'
   | 'race_DESC'
-  | 'realm_ASC'
-  | 'realm_DESC'
+  
+export type RealmOrderByInputValues =
+  | '_id_ASC'
+  | '_id_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
   
 export type MutationTypeValues =
   | 'CREATED'

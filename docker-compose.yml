@@ -11,5 +11,5 @@ services:
         databases:
           default:
             connector: mongo
-            uri: mongodb+srv://jneb:likgvQyckdgq9psk@cluster0-qbjhd.mongodb.net/ladder?retryWrites=true
-            database: ladder
+            uri: mongodb+srv://jneb:likgvQyckdgq9psk@cluster0-qbjhd.mongodb.net/mydatabase?retryWrites=true
+            database: mydatabase
