@@ -1,12 +1,12 @@
 
-# josh-graphql-prisma
-A node server using graphql and prisma
+# josh-prisma-docker
+a node graphql api server using prisma and docker
 
 ## Project Setup
 Clone the repo
 
 ```
-cd josh-graphql-prisma
+cd josh-prisma-docker
 ```
 
 ```
